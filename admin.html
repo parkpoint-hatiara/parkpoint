@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ParkPoint Admin</title>
+<style>
+body { font-family: Arial; padding: 30px; }
+table { width:100%; border-collapse: collapse; }
+th, td { padding: 10px; border: 1px solid #ddd; }
+button { padding: 5px 10px; }
+</style>
+</head>
+<body>
+
+<h2>ParkPoint Booking Dashboard</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Vehicle</th>
+<th>Type</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="bookingTable"></tbody>
+</table>
+
+<script>
+let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+let table = document.getElementById("bookingTable");
+
+function render() {
+    table.innerHTML = "";
+    bookings.forEach((b, index) => {
+        table.innerHTML += `
+        <tr>
+        <td>${b.name}</td>
+        <td>${b.vehicle}</td>
+        <td>${b.type}</td>
+        <td>${b.date}</td>
+        <td><button onclick="deleteBooking(${index})">Delete</button></td>
+        </tr>`;
+    });
+}
+
+function deleteBooking(index) {
+    bookings.splice(index,1);
+    localStorage.setItem("bookings", JSON.stringify(bookings));
+    render();
+}
+
+render();
+</script>
+
+</body>
+</html>
